@@ -1,0 +1,229 @@
+.gift-system {
+  position: relative;
+}
+
+.gift-button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 25px;
+  background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.gift-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+}
+
+.gift-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.gift-modal {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 20px;
+  padding: 30px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  color: white;
+}
+
+.gift-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.gift-modal-header h3 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: white;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-btn:hover {
+  opacity: 0.7;
+}
+
+.gift-modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.user-coins {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.gifts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+}
+
+.gift-item {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  position: relative;
+}
+
+.gift-item:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.gift-item.selected {
+  border-color: #4CAF50;
+  background: rgba(76, 175, 80, 0.2);
+}
+
+.gift-item.common {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.gift-item.rare {
+  border-color: rgba(33, 150, 243, 0.5);
+  box-shadow: 0 0 15px rgba(33, 150, 243, 0.3);
+}
+
+.gift-item.epic {
+  border-color: rgba(156, 39, 176, 0.5);
+  box-shadow: 0 0 15px rgba(156, 39, 176, 0.3);
+}
+
+.gift-item.legendary {
+  border-color: rgba(255, 152, 0, 0.5);
+  box-shadow: 0 0 20px rgba(255, 152, 0, 0.4);
+  animation: glow 2s infinite;
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 152, 0, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 152, 0, 0.6);
+  }
+}
+
+.gift-icon {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.gift-name {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.gift-price {
+  font-size: 14px;
+  color: #FFD700;
+  font-weight: 600;
+}
+
+.rarity-badge {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  padding: 3px 8px;
+  border-radius: 10px;
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.rarity-badge.common {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.rarity-badge.rare {
+  background: rgba(33, 150, 243, 0.5);
+}
+
+.rarity-badge.epic {
+  background: rgba(156, 39, 176, 0.5);
+}
+
+.rarity-badge.legendary {
+  background: rgba(255, 152, 0, 0.5);
+}
+
+.gift-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.send-gift-btn {
+  padding: 15px 40px;
+  border: none;
+  border-radius: 25px;
+  background: linear-gradient(135deg, #4CAF50, #45a049);
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.send-gift-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+}
+
+.send-gift-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .gifts-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
+  
+  .gift-icon {
+    font-size: 36px;
+  }
+}

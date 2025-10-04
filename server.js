@@ -72,6 +72,10 @@ app.use('/api/wallet', authenticateToken, walletRoutes);
 const datingRoutes = require('./routes/dating');
 app.use('/api/dating', authenticateToken, datingRoutes);
 app.use('/api/admin', authenticateToken, adminRoutes);
+  
+  // Voice room routes
+  const voiceRoomRoutes = require('./routes/voiceRooms');
+  app.use('/api/voice', voiceRoomRoutes);
 
 // Serve static files from client build
 app.use(express.static(path.join(__dirname, 'client/build')));
