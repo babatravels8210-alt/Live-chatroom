@@ -165,7 +165,8 @@ const VoiceDashboard: React.FC = () => {
 
           <div className="quick-actions">
             <h3>Quick Actions</h3>
-            <button className="action-btn">🎮 Join Gaming Room</button>
+            <button className="action-btn" onClick={() => navigate('/games')}>🎮 Play Games</button>
+            <button className="action-btn" onClick={() => navigate('/family')}>👨‍👩‍👧‍👦 Family System</button>
             <button className="action-btn">🎤 Join Karaoke</button>
             <button className="action-btn">📚 Join Study Room</button>
           </div>

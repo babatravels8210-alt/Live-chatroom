@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthProvider } from './contexts/AuthContext';
 import VoiceDashboard from './components/voice/VoiceDashboard';
 import VoiceRoom from './components/voice/VoiceRoom';
+import GameHub from './components/games/GameHub';
+import FamilySystem from './components/family/FamilySystem';
 import DatingProfile from './components/dating/DatingProfile';
 import './App.css';
 
@@ -15,6 +17,8 @@ function App() {
             <Route path="/" element={<VoiceDashboard />} />
             <Route path="/voice-dashboard" element={<VoiceDashboard />} />
             <Route path="/voice-room/:roomId" element={<VoiceRoom roomId="" />} />
+            <Route path="/games" element={<GameHub roomId="" userId="" />} />
+            <Route path="/family" element={<FamilySystem />} />
             <Route path="/dating/profile" element={<DatingProfile />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
