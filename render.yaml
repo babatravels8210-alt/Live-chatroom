@@ -1,0 +1,43 @@
+services:
+  - type: web
+    name: date-chat-pro
+    env: node
+    buildCommand: npm install && npm run build:client
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: MONGODB_URI
+        fromDatabase:
+          name: datechatpro-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: datechatpro-redis
+          property: connectionString
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: RAZORPAY_KEY_ID
+        sync: false
+      - key: RAZORPAY_KEY_SECRET
+        sync: false
+
+databases:
+  - name: datechatpro-db
+    databaseName: datechatpro
+    user: datechatpro
+    plan: starter
+
+redis:
+  - name: datechatpro-redis
+    plan: starter
+    maxmemoryPolicy: allkeys-lru

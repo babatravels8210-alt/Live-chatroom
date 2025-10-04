@@ -69,6 +69,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/rooms', authenticateToken, roomRoutes);
 app.use('/api/users', authenticateToken, userRoutes);
 app.use('/api/wallet', authenticateToken, walletRoutes);
+const datingRoutes = require('./routes/dating');
+app.use('/api/dating', authenticateToken, datingRoutes);
 app.use('/api/admin', authenticateToken, adminRoutes);
 
 // Serve static files from client build

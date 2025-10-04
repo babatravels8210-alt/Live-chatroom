@@ -4,15 +4,30 @@ const redis = require('redis');
 // MongoDB connection
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.DB_URI || 'mongodb://localhost:27017/achat-app', {
+    const mongoUri = process.env.MONGODB_URI || process.env.DB_URI || 'mongodb://localhost:27017/datechatpro';
+    const conn = await mongoose.connect(mongoUri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
     console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
+    
+    // Handle connection events
+    mongoose.connection.on('error', (err) => {
+      console.error('❌ MongoDB connection error:', err);
+    });
+    
+    mongoose.connection.on('disconnected', () => {
+      console.log('⚠️  MongoDB disconnected');
+    });
+    
+    process.on('SIGINT', async () => {
+      await mongoose.connection.close();
+      console.log('🔌 MongoDB connection closed through app termination');
+      process.exit(0);
+    });
+    
   } catch (error) {
     console.error('❌ MongoDB connection error:', error.message);
-    console.log('⚠️  Continuing without database connection for demo purposes');
-    // Don't exit in development/demo mode
     if (process.env.NODE_ENV === 'production') {
       process.exit(1);
     }
