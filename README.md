@@ -4,7 +4,9 @@ A comprehensive dating application with real-time chat, video calling, and premi
 
 ## 🚀 Live Demo
 
-**Production URL**: [https://datechatpro.onrender.com](https://datechatpro.onrender.com)
+**Live Development URL**: [https://12000-396275ca-08c5-41d8-9348-a8697b89621b.proxy.daytona.works](https://12000-396275ca-08c5-41d8-9348-a8697b89621b.proxy.daytona.works)
+
+**GitHub Repository**: [https://github.com/babatravels8210-alt/Live-chatroom](https://github.com/babatravels8210-alt/Live-chatroom)
 
 ## ✨ Features
 
