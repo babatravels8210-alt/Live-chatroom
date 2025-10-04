@@ -1,0 +1,26 @@
+name: global_voice_chat
+description: "A global voice chat application"
+publish_to: 'none'
+version: 1.0.0+31601059
+
+environment:
+  sdk: '>=3.5.3 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  permission_handler: ^11.3.1
+  audioplayers: ^5.2.1
+  socket_io_client: ^2.0.2
+  http: ^1.2.2
+  shared_preferences: ^2.3.2
+  provider: ^6.1.2
+  flutter_sound: ^9.2.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
