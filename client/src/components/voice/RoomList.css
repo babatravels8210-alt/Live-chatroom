@@ -1,0 +1,106 @@
+.room-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.room-item {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.room-item:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.room-image {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+}
+
+.room-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.live-indicator {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #ff4444;
+  color: white;
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: 600;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.room-info {
+  padding: 20px;
+  color: white;
+}
+
+.room-info h3 {
+  margin: 0 0 10px 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.theme {
+  color: #ccc;
+  font-size: 14px;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.host {
+  color: #aaa;
+  font-size: 13px;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.participants {
+  color: #4CAF50;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.join-btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.join-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
