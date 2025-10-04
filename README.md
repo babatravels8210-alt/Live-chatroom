@@ -1,223 +1,122 @@
-# Achat Pro - Voice Chat Application 🎤
+# Global Voice Chat
 
-A comprehensive voice chat application inspired by Achat Pro, featuring 24/7 live voice party rooms, gaming features, virtual gifts, and social interactions.
+A Flutter-based global voice chat application similar to the Achat - Global Voice Chat APK.
 
-## 🚀 Live Demo
-**Live Development URL**: [https://12000-396275ca-08c5-41d8-9348-a8697b89621b.proxy.daytona.works](https://12000-396275ca-08c5-41d8-9348-a8697b89621b.proxy.daytona.works)
+## Features Implemented
 
-**GitHub Repository**: [https://github.com/babatravels8210-alt/Live-chatroom](https://github.com/babatravels8210-alt/Live-chatroom)
+1. **Voice Chat Functionality**
+   - Real-time voice communication
+   - Room-based chat system
+   - Microphone and speaker controls
 
-## ✨ Features
+2. **Global Communication**
+   - Multi-language support
+   - International room categories
+   - User profiles with country information
 
-### 🎤 Voice Chat Rooms
-- **24/7 Live Voice Rooms** - Always active voice chat spaces
-- **Multiple Themes** - Gaming, Music, Study, Karaoke, Dating, Comedy
-- **User Roles** - Host, Speaker, Audience with different permissions
-- **Real-time Voice** - High-quality voice streaming with Agora SDK
-- **Room Management** - Create, join, and manage voice rooms
+3. **User Management**
+   - Profile creation and editing
+   - Interest-based matching
+   - Authentication system
 
-### 🎮 Gaming Features
-- **Interactive Games** - Built-in games within voice rooms
-- **Voice-based Gaming** - Play games using voice commands
-- **Tournaments** - Compete with other users in voice rooms
-- **Leaderboards** - Track gaming achievements and rankings
+4. **Social Features**
+   - Room creation (public/private)
+   - Search and filter capabilities
+   - Participant lists
 
-### 🎁 Gift System
-- **Virtual Gifts** - Send animated gifts to users
-- **Gift Categories** - Love, Romance, Luxury, Royal, Mythical
-- **Rarity Levels** - Common, Rare, Epic, Legendary gifts
-- **Coin Economy** - Earn and spend coins on gifts
+5. **App Permissions**
+   - Microphone access for voice transmission
+   - Storage permissions for media handling
+   - Camera permissions for video features
+   - Bluetooth permissions for audio devices
+   - Notification permissions
 
-### 👥 Social Features
-- **User Profiles** - Customizable profiles with voice verification
-- **Friend System** - Add friends and create groups
-- **Family System** - Create and join voice chat families
-- **Matching** - Find people with similar interests
+6. **UI Components**
+   - Bottom navigation bar
+   - Voice level indicators
+   - Room list with details
+   - User profile screen
+   - Settings panel
 
-### 💎 Premium Features
-- **VIP Membership** - Exclusive rooms and features
-- **Boost Profile** - Increase visibility in rooms
-- **Premium Gifts** - Access to exclusive gift categories
-- **Priority Support** - Dedicated customer support
-
-### 🔒 Safety Features
-- **Voice Verification** - Verify users with voice recognition
-- **Moderation Tools** - Report and block problematic users
-- **Content Filtering** - Automatic detection of inappropriate content
-- **Privacy Controls** - Control who can see and interact with you
-
-## 🛠️ Tech Stack
-
-### Backend
-- **Node.js** - Runtime environment
-- **Express.js** - Web framework
-- **Socket.IO** - Real-time communication
-- **MongoDB** - Primary database
-- **Redis** - Caching and sessions
-- **Agora SDK** - Voice chat infrastructure
-- **JWT** - Authentication tokens
-- **Cloudinary** - Media storage
-
-### Frontend
-- **React** - UI framework
-- **TypeScript** - Type safety
-- **Socket.IO Client** - Real-time features
-- **Agora RTC SDK** - Voice chat client
-- **React Router** - Navigation
-- **CSS3** - Modern styling with animations
-
-## 🚀 Quick Start
-
-### 1. Clone the Repository
-```bash
-git clone https://github.com/babatravels8210-alt/Live-chatroom.git
-cd achat-pro
-```
-
-### 2. Install Dependencies
-
-**Backend:**
-```bash
-npm install
-```
-
-**Frontend:**
-```bash
-cd client
-npm install
-```
-
-### 3. Environment Configuration
-
-Create a `.env` file in the root directory:
-
-```bash
-# Application Settings
-NODE_ENV=development
-PORT=12000
-CLIENT_URL=http://localhost:3000
-
-# Database
-DB_URI=mongodb://localhost:27017/achatpro
-REDIS_URL=redis://localhost:6379
-
-# JWT
-JWT_SECRET=your-super-secret-jwt-key
-
-# Agora (Voice Chat)
-AGORA_APP_ID=your-agora-app-id
-AGORA_APP_CERTIFICATE=your-agora-app-certificate
-
-# Cloudinary
-CLOUDINARY_CLOUD_NAME=your-cloud-name
-CLOUDINARY_API_KEY=your-api-key
-CLOUDINARY_API_SECRET=your-api-secret
-```
-
-### 4. Start Development
-
-**Backend:**
-```bash
-npm run dev
-```
-
-**Frontend:**
-```bash
-cd client
-npm start
-```
-
-The application will be available at:
-- Frontend: http://localhost:3000
-- Backend: http://localhost:12000
-
-## 📱 API Documentation
-
-### Voice Room Endpoints
-- `GET /api/voice/rooms` - Get all voice rooms
-- `POST /api/voice/rooms` - Create new voice room
-- `GET /api/voice/rooms/:roomId` - Get specific room details
-- `POST /api/voice/rooms/:roomId/join` - Join a voice room
-- `POST /api/voice/rooms/:roomId/leave` - Leave a voice room
-
-### User Management
-- `POST /api/auth/signup` - User registration
-- `POST /api/auth/login` - User login
-- `GET /api/auth/me` - Get current user profile
-- `PUT /api/users/profile` - Update user profile
-
-### Gift System
-- `GET /api/gifts` - Get available gifts
-- `POST /api/gifts/send` - Send gift to user
-- `GET /api/wallet/balance` - Get user coin balance
-- `POST /api/wallet/purchase` - Purchase coins
-
-## 🎮 Features in Development
-
-### Phase 2: Advanced Features
-- [ ] Gaming integration (Car racing, Draw & Guess)
-- [ ] Voice effects and filters
-- [ ] Room recording and playback
-- [ ] AI-powered moderation
-- [ ] Advanced analytics dashboard
-
-### Phase 3: Social Expansion
-- [ ] Family system with ranks
-- [ ] Voice-based matching algorithm
-- [ ] Virtual events and parties
-- [ ] Cross-platform mobile app
-- [ ] Integration with music streaming services
-
-## 🔧 Configuration
-
-### Agora Setup
-1. Create account at [Agora.io](https://www.agora.io/)
-2. Create new project and get App ID
-3. Generate temporary tokens for testing
-4. Update environment variables with your credentials
-
-### Database Setup
-1. Install MongoDB locally or use MongoDB Atlas
-2. Create database named "achatpro"
-3. Update connection string in environment variables
-
-### Cloudinary Setup
-1. Create account at [Cloudinary](https://cloudinary.com/)
-2. Get cloud name, API key, and API secret
-3. Update environment variables
-
-## 📁 Project Structure
+## Project Structure
 
 ```
-achat-pro/
-├── client/                 # React frontend
-│   ├── src/
-│   │   ├── components/     # Reusable components
-│   │   │   ├── voice/      # Voice chat components
-│   │   │   ├── gift/       # Gift system components
-│   │   │   └── dating/     # Legacy dating components
-│   │   ├── contexts/       # React contexts
-│   │   └── services/       # API services
-├── routes/                 # Express routes
-├── models/                 # MongoDB models
-├── middleware/             # Express middleware
-├── socket/                 # Socket.IO handlers
-├── config/                 # Configuration files
-└── public/                 # Static files
+lib/
+├── main.dart                 # Main application entry point
+├── models/
+│   ├── chat_room.dart        # Chat room data model
+│   └── user.dart            # User data model
+├── screens/
+│   ├── room_list_screen.dart # Room listing screen
+│   ├── create_room_screen.dart # Room creation screen
+│   └── profile_screen.dart  # User profile screen
+├── services/
+│   ├── voice_chat_service.dart # Voice chat functionality
+│   └── permission_service.dart # App permissions handler
+├── utils/
+│   └── constants.dart       # Application constants
+└── widgets/
+    ├── voice_level_indicator.dart # Voice activity indicator
+    └── search_delegate.dart # Room search functionality
 ```
 
-## 🤝 Contributing
+## Dependencies
+
+- `permission_handler`: For handling app permissions
+- `audioplayers`: For audio playback
+- `socket_io_client`: For real-time communication
+- `http`: For API requests
+- `shared_preferences`: For local data storage
+- `provider`: For state management
+- `flutter_sound`: For audio recording
+
+## Android Permissions
+
+The application requires the following Android permissions:
+- INTERNET
+- RECORD_AUDIO
+- MODIFY_AUDIO_SETTINGS
+- WAKE_LOCK
+- VIBRATE
+- POST_NOTIFICATIONS
+- FOREGROUND_SERVICE
+- RECEIVE_BOOT_COMPLETED
+- WRITE_EXTERNAL_STORAGE
+- READ_EXTERNAL_STORAGE
+- READ_MEDIA_IMAGES
+- READ_MEDIA_AUDIO
+- READ_MEDIA_VIDEO
+- CAMERA
+- BLUETOOTH
+- BLUETOOTH_ADMIN
+- BLUETOOTH_SCAN
+- BLUETOOTH_ADVERTISE
+- BLUETOOTH_CONNECT
+- READ_CALENDAR
+- WRITE_CALENDAR
+- SYSTEM_ALERT_WINDOW
+- SYSTEM_OVERLAY_WINDOW
+- com.google.android.gms.permission.AD_ID
+- com.google.android.c2dm.permission.RECEIVE
+- com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE
+- com.android.vending.BILLING
+- Various launcher badge permissions
+
+## Getting Started
+
+1. Clone this repository
+2. Run `flutter pub get` to install dependencies
+3. Run `flutter run` to start the application
+
+## Version Information
+
+- Version: 1.0.0
+- Based on Achat - Global Voice Chat v3.16.01
+
+## Contributing
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙋‍♂️ Support
-
-For support, email support@achatpro.com or join our Discord server.
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
