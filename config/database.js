@@ -22,14 +22,16 @@ const connectDB = async () => {
     
     process.on('SIGINT', async () => {
       await mongoose.connection.close();
-      console.log('🔌 MongoDB connection closed through app termination');
+      console.log('🔋 MongoDB connection closed through app termination');
       process.exit(0);
     });
     
   } catch (error) {
     console.error('❌ MongoDB connection error:', error.message);
+    // In production, we'll continue without MongoDB if connection fails
+    // This allows the app to start and handle errors gracefully
     if (process.env.NODE_ENV === 'production') {
-      process.exit(1);
+      console.log('⚠️  MongoDB connection failed in production, continuing without database');
     }
   }
 };

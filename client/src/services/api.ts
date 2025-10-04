@@ -153,14 +153,20 @@ export const walletApi = {
   getTransactions: () =>
     api.get('/wallet/transactions'),
   
-  addCoins: (amount: number, paymentMethod: string) =>
-    api.post('/wallet/add-coins', { amount, paymentMethod }),
+  getPackages: () =>
+    api.get('/wallet/packages'),
   
-  transferCoins: (recipientId: string, amount: number) =>
-    api.post('/wallet/transfer', { recipientId, amount }),
+  createOrder: (packageId: string) =>
+    api.post('/wallet/createOrder', { packageId }),
   
-  createPayment: (amount: number) =>
-    api.post('/wallet/payment', { amount }),
+  verifyPayment: (orderId: string, transactionId: string) =>
+    api.post('/wallet/verifyPayment', { orderId, transactionId }),
+  
+  sendGift: (recipientId: string, giftType: string, roomId?: string, message?: string) =>
+    api.post('/wallet/sendGift', { recipientId, giftType, roomId, message }),
+  
+  getEarnings: (period?: string) =>
+    api.get(`/wallet/earnings${period ? `?period=${period}` : ''}`),
 };
 
 export default api;

@@ -27,7 +27,7 @@ const transactionSchema = new mongoose.Schema({
   // Payment gateway details
   paymentGateway: {
     type: String,
-    enum: ['razorpay', 'cashfree', 'google_play', 'app_store'],
+    enum: ['cashfree', 'google_play', 'app_store'],
     required: function() {
       return this.type === 'purchase';
     }

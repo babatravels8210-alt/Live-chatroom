@@ -15,6 +15,7 @@ const roomRoutes = require('./routes/rooms');
 const userRoutes = require('./routes/users');
 const walletRoutes = require('./routes/wallet');
 const adminRoutes = require('./routes/admin');
+const paymentWebhookRoutes = require('./routes/paymentWebhook');
 
 // Import middleware
 const { authenticateToken } = require('./middleware/auth');
@@ -69,6 +70,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/rooms', authenticateToken, roomRoutes);
 app.use('/api/users', authenticateToken, userRoutes);
 app.use('/api/wallet', authenticateToken, walletRoutes);
+app.use('/api/payment', paymentWebhookRoutes);
 const datingRoutes = require('./routes/dating');
 app.use('/api/dating', authenticateToken, datingRoutes);
 app.use('/api/admin', authenticateToken, adminRoutes);
