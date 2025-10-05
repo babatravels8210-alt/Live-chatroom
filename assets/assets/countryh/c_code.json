@@ -1,0 +1,124 @@
+{
+  "RECORDS": [
+    {
+      "en_name": "United Arab Emirates",
+      "initial": "U",
+      "country_code": "971",
+      "flag": "AE",
+      "ar_name": "الإمارات العربية المتحدة",
+      "names": {
+        "en": "United Arab Emirates",
+        "ur": "متحدہ عرب امارات",
+        "bn": "সংযুক্ত আরব আমিরাত"
+      }
+    },
+    {
+      "en_name": "Saudi Arabia",
+      "initial": "S",
+      "country_code": "966",
+      "flag": "SA",
+      "ar_name": "السعودية",
+      "names": {
+        "en": "Saudi Arabia",
+        "ur": "سعودی عرب",
+        "bn": "সৌদি আরব"
+      }
+    },
+    {
+      "en_name": "Oman",
+      "initial": "O",
+      "country_code": "968",
+      "flag": "OM",
+      "ar_name": "عمّان",
+      "names": {
+        "en": "Oman",
+        "ur": "عمان",
+        "bn": "ওমান"
+      }
+    },
+    {
+      "en_name": "Bahrain",
+      "initial": "B",
+      "country_code": "973",
+      "flag": "BH",
+      "ar_name": "البحرين",
+      "names": {
+        "en": "Bahrain",
+        "ur": "بحرین",
+        "bn": "বাহরাইন"
+      }
+    },
+    {
+      "en_name": "India",
+      "initial": "I",
+      "country_code": "91",
+      "flag": "IN",
+      "ar_name": "الهند",
+      "names": {
+        "en": "India",
+        "ur": "انڈیا",
+        "bn": "ভারত"
+      }
+    },
+    {
+      "en_name": "Kuwait",
+      "initial": "K",
+      "country_code": "965",
+      "flag": "KW",
+      "ar_name": "الكويت",
+      "names": {
+        "en": "Kuwait",
+        "ur": "کویت",
+        "bn": "কুয়েত"
+      }
+    },
+    {
+      "en_name": "Qatar",
+      "initial": "Q",
+      "country_code": "974",
+      "flag": "QA",
+      "ar_name": "قطر",
+      "names": {
+        "en": "Qatar",
+        "ur": "قطر",
+        "bn": "কাতার"
+      }
+    },
+    {
+      "en_name": "United States",
+      "initial": "U",
+      "country_code": "1",
+      "flag": "US",
+      "ar_name": "الولايات المتحدة الأمريكية",
+      "names": {
+        "en": "United States",
+        "ur": "ریاستہائے متحدہ",
+        "bn": "মার্কিন যুক্তরাষ্ট্র"
+      }
+    },
+    {
+      "en_name": "Bangladesh",
+      "initial": "B",
+      "country_code": "880",
+      "flag": "BD",
+      "ar_name": "بنغلاديش",
+      "names": {
+        "en": "Bangladesh",
+        "ur": "بنگلادیش",
+        "bn": "বাংলাদেশ"
+      }
+    },
+    {
+      "en_name": "Pakistan",
+      "initial": "P",
+      "country_code": "92",
+      "flag": "PK",
+      "ar_name": "الولايات المتحدة الأمريكية",
+      "names": {
+        "en": "Pakistan",
+        "ur": "پاکستان",
+        "bn": "পাকিস্তান"
+      }
+    }
+  ]
+}

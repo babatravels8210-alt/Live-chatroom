@@ -1,0 +1,74 @@
+{
+  "sensitive_alert_popout": {
+    "is_show": true,
+    "show_cd": 1,
+    "only_male": true,
+    "show_max": 100,
+    "categories": [
+      {
+        "type": "marriage",
+        "is_show": true,
+        "sent_msg_amount": 20,
+        "show_cd": 1,
+        "show_max": 100,
+        "priority": 1,
+        "content": [
+          {
+            "lan": "en",
+            "words": "boyfriend,single,married,fiance,divorced",
+            "title": "Wait! it's not polite to ask this",
+            "detail": "Friendship should be build up step by step, she might feel uncomfortable."
+          }
+        ]
+      },
+      {
+        "type": "photo",
+        "is_show": true,
+        "sent_msg_amount": 20,
+        "show_cd": 1,
+        "show_max": 100,
+        "priority": 2,
+        "content": [
+          {
+            "lan": "en",
+            "words": "your photo,photo,selfie,call",
+            "title": "Wait! You might scare her",
+            "detail": "Friendship should be build up step by step."
+          }
+        ]
+      },
+      {
+        "type": "account",
+        "is_show": true,
+        "sent_msg_amount": 30,
+        "show_cd": 1,
+        "show_max": 100,
+        "priority": 3,
+        "content": [
+          {
+            "lan": "en",
+            "words": "Twitter,Snapchat,Instagram,Massenger,Facebook,WhatsApp,skype",
+            "title": "Wait! You might scare her",
+            "detail": "Friendship should be build up step by step."
+          }
+        ]
+      },
+      {
+        "type": "porn",
+        "is_show": true,
+        "sent_msg_amount": 50,
+        "show_cd": 1,
+        "show_max": 100,
+        "priority": 4,
+        "content": [
+          {
+            "lan": "en",
+            "words": "ayry,mumis,sadria,hatah fini,sufism,opium,astrox,hemp,vaginal,hooker,penis,mohamed morsi,breasts,kill yourself,rape,molotov,ejaculation,drugs,cock,dick,sexual,porn,suck,masturbating,masturbation,butt,vagina,sex",
+            "title": "Wait! it's not polite to ask this",
+            "detail": "Offensive message might result to account block."
+          }
+        ]
+      }
+    ]
+  }
+}
