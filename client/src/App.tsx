@@ -6,6 +6,7 @@ import VoiceRoom from './components/voice/VoiceRoom';
 import GameHub from './components/games/GameHub';
 import FamilySystem from './components/family/FamilySystem';
 import DatingProfile from './components/dating/DatingProfile';
+import AdminPanel from './components/admin/AdminPanel';
 import './App.css';
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
             <Route path="/games" element={<GameHub roomId="" userId="" />} />
             <Route path="/family" element={<FamilySystem />} />
             <Route path="/dating/profile" element={<DatingProfile />} />
+            <Route path="/admin" element={<AdminPanel />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
