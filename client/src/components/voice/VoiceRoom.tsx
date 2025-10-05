@@ -28,9 +28,9 @@ const VoiceRoom: React.FC<VoiceRoomProps> = ({ roomId }) => {
     host: 'Room Host'
   });
   
-  const client = useRef<AgoraRTC.IAgoraRTCClient | null>(null);
+  const client = useRef<any>(null);
   const socket = useRef<any>(null);
-  const localAudioTrack = useRef<AgoraRTC.IMicrophoneAudioTrack | null>(null);
+  const localAudioTrack = useRef<any>(null);
 
   useEffect(() => {
     initializeVoiceRoom();

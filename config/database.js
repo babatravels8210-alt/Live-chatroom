@@ -4,7 +4,13 @@ const redis = require('redis');
 // MongoDB connection
 const connectDB = async () => {
   try {
-    const mongoUri = process.env.MONGODB_URI || process.env.DB_URI || 'mongodb://localhost:27017/datechatpro';
+    const mongoUri = process.env.MONGODB_URI || process.env.DB_URI;
+    
+    if (!mongoUri) {
+      console.log('⚠️  MongoDB URI not configured - running without database');
+      return;
+    }
+    
     const conn = await mongoose.connect(mongoUri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -28,9 +34,7 @@ const connectDB = async () => {
     
   } catch (error) {
     console.error('❌ MongoDB connection error:', error.message);
-    if (process.env.NODE_ENV === 'production') {
-      process.exit(1);
-    }
+    console.log('⚠️  Continuing without database connection');
   }
 };
 
@@ -39,8 +43,15 @@ let redisClient;
 
 const connectRedis = async () => {
   try {
+    const redisUrl = process.env.REDIS_URL;
+    
+    if (!redisUrl) {
+      console.log('⚠️  Redis URL not configured - running without Redis cache');
+      return null;
+    }
+    
     redisClient = redis.createClient({
-      url: process.env.REDIS_URL || 'redis://localhost:6379'
+      url: redisUrl
     });
 
     redisClient.on('error', (err) => {
@@ -55,12 +66,14 @@ const connectRedis = async () => {
     return redisClient;
   } catch (error) {
     console.error('❌ Redis connection error:', error.message);
-    // Continue without Redis if connection fails
+    console.log('⚠️  Continuing without Redis cache');
     return null;
   }
 };
 
-// Initialize Redis connection
-connectRedis();
+// Initialize Redis connection only if URL is provided
+if (process.env.REDIS_URL) {
+  connectRedis();
+}
 
 module.exports = { connectDB, redisClient };
