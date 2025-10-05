@@ -4,6 +4,7 @@ const User = require('../models/User');
 const Transaction = require('../models/Transaction');
 const Message = require('../models/Message');
 const Room = require('../models/Room');
+const cashfreeService = require('../services/cashfreeService');
 
 const router = express.Router();
 
@@ -63,7 +64,7 @@ router.get('/packages', (req, res) => {
 // Add coins (purchase)
 router.post('/addCoins', [
   body('packageId').isIn(Object.keys(COIN_PACKAGES)).withMessage('Invalid package ID'),
-  body('paymentMethod').isIn(['razorpay', 'cashfree', 'google_play', 'app_store']).withMessage('Invalid payment method')
+  body('paymentMethod').isIn(['cashfree', 'google_play', 'app_store']).withMessage('Invalid payment method')
 ], async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -81,6 +82,9 @@ router.post('/addCoins', [
       return res.status(400).json({ message: 'Invalid package' });
     }
 
+    // Generate unique order ID
+    const orderId = `order_${Date.now()}_${req.user._id}`;
+
     // Create transaction record
     const transaction = new Transaction({
       user: req.user._id,
@@ -89,18 +93,64 @@ router.post('/addCoins', [
       coins: package.coins,
       currency: package.currency,
       paymentGateway: paymentMethod,
-      paymentId: paymentDetails?.paymentId,
-      orderId: paymentDetails?.orderId,
-      signature: paymentDetails?.signature,
+      orderId: orderId,
       status: 'pending'
     });
 
     await transaction.save();
 
-    // For demo purposes, automatically approve the transaction
+    // Handle Cashfree payment
+    if (paymentMethod === 'cashfree') {
+      // Create Cashfree order
+      const cashfreeOrder = await cashfreeService.createOrder({
+        amount: package.price,
+        currency: package.currency,
+        orderId: orderId,
+        customerDetails: {
+          customerId: req.user._id.toString(),
+          phone: req.user.phone || '9999999999',
+          email: req.user.email,
+          name: req.user.username
+        },
+        returnUrl: `${process.env.CLIENT_URL}/payment/callback`,
+        orderNote: `Purchase of ${package.coins} coins`,
+        orderTags: {
+          packageId: packageId,
+          userId: req.user._id.toString()
+        }
+      });
+
+      if (!cashfreeOrder.success) {
+        transaction.status = 'failed';
+        await transaction.save();
+        return res.status(500).json({ 
+          message: 'Failed to create payment order',
+          error: cashfreeOrder.error
+        });
+      }
+
+      // Update transaction with Cashfree order details
+      transaction.paymentId = cashfreeOrder.data.cf_order_id;
+      transaction.metadata = {
+        payment_session_id: cashfreeOrder.data.payment_session_id,
+        order_status: cashfreeOrder.data.order_status
+      };
+      await transaction.save();
+
+      return res.json({
+        message: 'Payment order created successfully',
+        transaction: transaction.toObject(),
+        paymentSessionId: cashfreeOrder.data.payment_session_id,
+        orderId: orderId,
+        cashfreeOrderId: cashfreeOrder.data.cf_order_id
+      });
+    }
+
+    // For demo purposes with other payment methods, automatically approve the transaction
     // In production, this would be handled by payment gateway webhooks
     if (paymentDetails?.paymentId) {
       transaction.status = 'completed';
+      transaction.paymentId = paymentDetails.paymentId;
       await transaction.save();
 
       // Add coins to user account
@@ -431,5 +481,119 @@ router.post('/redeem', [
     res.status(500).json({ message: 'Failed to process redemption request' });
   }
 });
+
+  // Cashfree Payment Webhook
+  router.post("/webhook/cashfree", async (req, res) => {
+    try {
+      const signature = req.headers["x-webhook-signature"];
+      const timestamp = req.headers["x-webhook-timestamp"];
+      const rawBody = JSON.stringify(req.body);
+
+      // Verify webhook signature
+      const isValid = cashfreeService.verifyWebhookSignature(signature, rawBody, timestamp);
+      
+      if (!isValid) {
+        console.error("Invalid webhook signature");
+        return res.status(400).json({ message: "Invalid signature" });
+      }
+
+      const webhookData = req.body;
+      const { type, data } = webhookData;
+
+      // Handle payment success
+      if (type === "PAYMENT_SUCCESS_WEBHOOK") {
+        const orderId = data.order.order_id;
+        const paymentId = data.payment.cf_payment_id;
+        const paymentStatus = data.payment.payment_status;
+
+        if (paymentStatus === "SUCCESS") {
+          // Find transaction by order ID
+          const transaction = await Transaction.findOne({ orderId: orderId });
+
+          if (!transaction) {
+            console.error("Transaction not found for order:", orderId);
+            return res.status(404).json({ message: "Transaction not found" });
+          }
+
+          // Update transaction status
+          transaction.status = "completed";
+          transaction.paymentId = paymentId;
+          transaction.metadata = {
+            ...transaction.metadata,
+            payment_method: data.payment.payment_method,
+            payment_time: data.payment.payment_time
+          };
+          await transaction.save();
+
+          // Add coins to user account
+          const user = await User.findById(transaction.user);
+          if (user) {
+            user.coins += transaction.coins;
+            await user.save();
+            console.log(`Added ${transaction.coins} coins to user ${user._id}`);
+          }
+        }
+      }
+
+      // Handle payment failure
+      if (type === "PAYMENT_FAILED_WEBHOOK") {
+        const orderId = data.order.order_id;
+        
+        const transaction = await Transaction.findOne({ orderId: orderId });
+        if (transaction) {
+          transaction.status = "failed";
+          transaction.metadata = {
+            ...transaction.metadata,
+            failure_reason: data.payment.payment_message
+          };
+          await transaction.save();
+        }
+      }
+
+      res.status(200).json({ message: "Webhook processed successfully" });
+
+    } catch (error) {
+      console.error("Cashfree webhook error:", error);
+      res.status(500).json({ message: "Webhook processing failed" });
+    }
+  });
+
+  // Verify payment status (for client-side verification)
+  router.get("/verify-payment/:orderId", async (req, res) => {
+    try {
+      const { orderId } = req.params;
+
+      // Get order from Cashfree
+      const cashfreeOrder = await cashfreeService.getOrder(orderId);
+
+      if (!cashfreeOrder.success) {
+        return res.status(404).json({ 
+          message: "Order not found",
+          error: cashfreeOrder.error
+        });
+      }
+
+      // Get transaction from database
+      const transaction = await Transaction.findOne({ orderId: orderId });
+
+      if (!transaction) {
+        return res.status(404).json({ message: "Transaction not found" });
+      }
+
+      // Get payment details
+      const paymentDetails = await cashfreeService.getPaymentDetails(orderId);
+
+      res.json({
+        order: cashfreeOrder.data,
+        transaction: transaction.toObject(),
+        payments: paymentDetails.success ? paymentDetails.data : []
+      });
+
+    } catch (error) {
+      console.error("Verify payment error:", error);
+      res.status(500).json({ message: "Failed to verify payment" });
+    }
+  });
+
 
 module.exports = router;
