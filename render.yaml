@@ -2,7 +2,7 @@ services:
   - type: web
     name: date-chat-pro
     env: node
-    buildCommand: npm install && npm run install:client && npm run build:client
+    buildCommand: npm install && cd client && npm install && npm run build
     startCommand: npm start
     envVars:
       - key: NODE_ENV
