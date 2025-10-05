@@ -83,7 +83,7 @@ temp/
 
 # Gatsby files
 .cache/
-public
+# public - commented out to allow client/public folder
 
 # Storybook build outputs
 .out
@@ -118,3 +118,29 @@ google-services.json
 
 # Android Profiling
 *.hprof
+
+# Flutter/Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+pubspec.lock
+*.g.dart
+
+# Flutter generated files
+**/generated_plugin_registrant.dart
+**/GeneratedPluginRegistrant.swift
+**/generated_plugin_registrant.cc
+**/generated_plugin_registrant.h
+**/generated_plugins.cmake
+
+# MongoDB
+mongodb-data/
+*.log.*
+
+# Downloaded archives
+*.tar.xz
+*.tar.gz
+*.zip

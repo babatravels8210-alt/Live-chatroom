@@ -3,8 +3,8 @@
 # Flutter APK Build Script
 echo "Building Global Voice Chat APK..."
 
-# Navigate to project directory
-cd /workspace/global_voice_chat
+# Navigate to project directory (current directory has Flutter project)
+cd /workspace/Live-chatroom
 
 # Get dependencies
 flutter pub get
