@@ -102,11 +102,33 @@ The application requires the following Android permissions:
 - com.android.vending.BILLING
 - Various launcher badge permissions
 
+## Payment Gateway
+
+This application uses **Cashfree Payment Gateway** for handling in-app purchases and coin transactions.
+
+### Setup Instructions
+
+For detailed setup instructions, please refer to [CASHFREE_SETUP.md](CASHFREE_SETUP.md)
+
+### Quick Setup
+
+1. Sign up at [Cashfree](https://www.cashfree.com/)
+2. Get your API credentials from the Merchant Dashboard
+3. Add credentials to your `.env` file:
+   ```env
+   CASHFREE_APP_ID=your-cashfree-app-id
+   CASHFREE_SECRET_KEY=your-cashfree-secret-key
+   CASHFREE_ENVIRONMENT=SANDBOX
+   ```
+4. Configure webhook URL in Cashfree Dashboard
+
 ## Getting Started
 
 1. Clone this repository
 2. Run `flutter pub get` to install dependencies
-3. Run `flutter run` to start the application
+3. Run `npm install` in the root directory for backend dependencies
+4. Configure environment variables (see `.env.example`)
+5. Run `flutter run` to start the application
 
 ## Version Information
 
