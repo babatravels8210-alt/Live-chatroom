@@ -111,7 +111,7 @@ Live-chatroom/
 
 ### 6. GitHub Integration
 - [x] Create new branch for Achat Global implementation
-- [ ] Commit all changes with descriptive messages
+- [x] Commit all changes with descriptive messages
 - [ ] Push branch to GitHub repository
 - [ ] Create pull request for review
 - [ ] Merge changes to main branch
