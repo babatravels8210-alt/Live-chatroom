@@ -29,24 +29,24 @@
 ```
 Live-chatroom/
 ├── lib/                    # Flutter app (100% complete)
-│   ├── main.dart
+│   ├── main.dart          # Updated with Achat Global design
 │   ├── screens/
-│   │   ├── login_screen.dart
-│   │   ├── home_screen.dart
-│   │   ├── chat_room_screen.dart
-│   │   ├── profile_screen.dart
-│   │   ├── pk_battle_screen.dart
-│   │   ├── talent_show_screen.dart
-│   │   └── friends_screen.dart
+│   │   ├── login_screen.dart      # New login screen
+│   │   ├── home_screen.dart       # Updated home screen
+│   │   ├── chat_room_screen.dart  # Enhanced chat room
+│   │   ├── profile_screen.dart    # Enhanced profile
+│   │   ├── pk_battle_screen.dart  # New PK battle screen
+│   │   ├── talent_show_screen.dart # New talent show screen
+│   │   └── friends_screen.dart    # Friends management
 │   ├── services/
-│   │   ├── auth_service.dart
-│   │   ├── socket_service.dart
-│   │   ├── audio_service.dart
-│   │   ├── voice_chat_service.dart
-│   │   ├── friend_service.dart
-│   │   ├── pk_battle_service.dart
-│   │   ├── talent_show_service.dart
-│   │   └── room_service.dart
+│   │   ├── auth_service.dart      # Authentication service
+│   │   ├── socket_service.dart    # Socket.io service
+│   │   ├── audio_service.dart     # Audio processing
+│   │   ├── friend_service.dart    # Friend management
+│   │   ├── pk_battle_service.dart # PK battle system
+│   │   ├── talent_show_service.dart # Talent show features
+│   │   ├── room_service.dart      # Room management
+│   │   └── voice_chat_service.dart # Voice chat functionality
 │   ├── models/
 │   │   ├── user.dart
 │   │   ├── room.dart
@@ -54,13 +54,13 @@ Live-chatroom/
 │   └── widgets/
 │       ├── room_card.dart
 │       └── voice_controls.dart
-├── assets/               # All original assets (773+ files)
+├── assets/                # All original assets (773+ files)
 │   ├── resource/
 │   ├── packages/
 │   └── fonts/
-├── android/              # Android build ready
-├── ios/                  # iOS build ready
-└── web/                  # Web build ready
+├── android/               # Android build ready
+├── ios/                   # iOS build ready
+└── web/                   # Web build ready
 ```
 
 ## 🚀 How to Use
@@ -98,7 +98,7 @@ flutter build web --release
 • **All UI elements** (buttons, backgrounds, avatars)
 • **Country flags** (50+ countries)
 • **Audio files** (effects and music)
-• **Fonts** (Dsdigib, PkEffectFont)
+• **Fonts** (Dsdigib, PkEffectFont, Arial, OswaldSemiBold)
 • **Configuration files** (JSON configs)
 
 ## 🔧 Technical Stack
