@@ -1,34 +1,40 @@
 class User {
   final String id;
   final String username;
-  final String email;
-  final String? profilePicture;
+  final String country;
+  final String avatar;
+  final bool isOnline;
+  final int friendsCount;
+  final int followersCount;
+  final int followingCount;
   final String? bio;
   final List<String> interests;
-  final String? country;
-  final String? language;
 
   User({
     required this.id,
     required this.username,
-    required this.email,
-    this.profilePicture,
+    required this.country,
+    this.avatar = 'assets/resource/avatar_h/1.webp',
+    this.isOnline = true,
+    this.friendsCount = 0,
+    this.followersCount = 0,
+    this.followingCount = 0,
     this.bio,
     required this.interests,
-    this.country,
-    this.language,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['id'] as String,
       username: json['username'] as String,
-      email: json['email'] as String,
-      profilePicture: json['profilePicture'] as String?,
+      country: json['country'] as String,
+      avatar: json['avatar'] as String? ?? 'assets/resource/avatar_h/1.webp',
+      isOnline: json['isOnline'] as bool? ?? true,
+      friendsCount: json['friendsCount'] as int? ?? 0,
+      followersCount: json['followersCount'] as int? ?? 0,
+      followingCount: json['followingCount'] as int? ?? 0,
       bio: json['bio'] as String?,
-      interests: List<String>.from(json['interests'] as List),
-      country: json['country'] as String?,
-      language: json['language'] as String?,
+      interests: List<String>.from(json['interests'] as List? ?? []),
     );
   }
 
@@ -36,12 +42,14 @@ class User {
     return {
       'id': id,
       'username': username,
-      'email': email,
-      'profilePicture': profilePicture,
+      'country': country,
+      'avatar': avatar,
+      'isOnline': isOnline,
+      'friendsCount': friendsCount,
+      'followersCount': followersCount,
+      'followingCount': followingCount,
       'bio': bio,
       'interests': interests,
-      'country': country,
-      'language': language,
     };
   }
 }

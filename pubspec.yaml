@@ -1,7 +1,7 @@
-name: global_voice_chat
-description: "A global voice chat application"
+name: achat_global_replica
+description: "Exact replica of Achat Global voice chat app"
 publish_to: 'none'
-version: 1.0.0+31601059
+version: 1.0.0+3.16.01
 
 environment:
   sdk: '>=3.5.3 <4.0.0'
@@ -24,3 +24,39 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/resource/
+    - assets/resource/about/
+    - assets/resource/avatar_h/
+    - assets/resource/call_h/
+    - assets/resource/chat_h/
+    - assets/resource/country_h/
+    - assets/resource/cp/
+    - assets/resource/decoration_h/
+    - assets/resource/evaluate_h/
+    - assets/resource/finance/
+    - assets/resource/gift/
+    - assets/resource/guide_h/
+    - assets/resource/home_h/
+    - assets/resource/icon_h/
+    - assets/resource/live_h/
+    - assets/resource/live_h/award/
+    - assets/fonts/
+    - assets/packages/
+    - assets/packages/car_game/res/
+    - assets/packages/car_game/res/aac/
+    - assets/voice_aac/
+  
+  fonts:
+    - family: Dsdigib
+      fonts:
+        - asset: assets/fonts/Dsdigib.ttf
+    - family: PkEffectFont
+      fonts:
+        - asset: assets/fonts/PkEffectFont.ttf
+    - family: Arial
+      fonts:
+        - asset: assets/fonts/arial.ttf
+    - family: OswaldSemiBold
+      fonts:
+        - asset: assets/fonts/OswaldSemiBold.ttf

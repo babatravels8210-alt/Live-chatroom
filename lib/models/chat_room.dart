@@ -1,37 +1,37 @@
 class ChatRoom {
   final String id;
   final String name;
-  final String description;
-  final int participantCount;
+  final String imageUrl;
+  final int userCount;
+  final bool isLocked;
+  final bool isLive;
   final List<String> participants;
-  final String language;
   final String category;
-  final bool isPrivate;
-  final String? password;
+  final String creatorId;
 
   ChatRoom({
     required this.id,
     required this.name,
-    required this.description,
-    required this.participantCount,
+    required this.imageUrl,
+    required this.userCount,
+    this.isLocked = false,
+    this.isLive = false,
     required this.participants,
-    required this.language,
     required this.category,
-    this.isPrivate = false,
-    this.password,
+    required this.creatorId,
   });
 
   factory ChatRoom.fromJson(Map<String, dynamic> json) {
     return ChatRoom(
       id: json['id'] as String,
       name: json['name'] as String,
-      description: json['description'] as String,
-      participantCount: json['participantCount'] as int,
+      imageUrl: json['imageUrl'] as String,
+      userCount: json['userCount'] as int,
+      isLocked: json['isLocked'] as bool? ?? false,
+      isLive: json['isLive'] as bool? ?? false,
       participants: List<String>.from(json['participants'] as List),
-      language: json['language'] as String,
       category: json['category'] as String,
-      isPrivate: json['isPrivate'] as bool? ?? false,
-      password: json['password'] as String?,
+      creatorId: json['creatorId'] as String,
     );
   }
 
@@ -39,13 +39,13 @@ class ChatRoom {
     return {
       'id': id,
       'name': name,
-      'description': description,
-      'participantCount': participantCount,
+      'imageUrl': imageUrl,
+      'userCount': userCount,
+      'isLocked': isLocked,
+      'isLive': isLive,
       'participants': participants,
-      'language': language,
       'category': category,
-      'isPrivate': isPrivate,
-      'password': password,
+      'creatorId': creatorId,
     };
   }
 }

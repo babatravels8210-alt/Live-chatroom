@@ -1,149 +1,164 @@
 import 'package:flutter/material.dart';
-import 'package:global_voice_chat/services/voice_chat_service.dart';
-import 'package:global_voice_chat/models/user.dart';
+import 'package:provider/provider.dart';
+import 'package:achat_global_replica/services/auth_service.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
-  final VoiceChatService _voiceChatService = VoiceChatService();
-  late User _user;
-
-  @override
-  void initState() {
-    super.initState();
-    _user = _voiceChatService.currentUser;
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context);
+    
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
+        title: const Text(
+          'My Profile',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: const Color(0xFF1a1a2e),
+        elevation: 0,
+        actions: [
+          IconButton(
+            onPressed: () {
+              // Edit profile functionality
+            },
+            icon: Image.asset(
+              'assets/resource/icon_h/edit_h.png',
+              width: 24,
+              height: 24,
+            ),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 20),
-            // Profile picture
-            CircleAvatar(
-              radius: 50,
-              backgroundImage: _user.profilePicture != null
-                  ? NetworkImage(_user.profilePicture!)
-                  : null,
-              child: _user.profilePicture == null
-                  ? const Icon(
-                      Icons.person,
-                      size: 50,
-                      color: Colors.white,
-                    )
-                  : null,
-            ),
-            const SizedBox(height: 20),
-            // Username
-            Text(
-              _user.username,
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+            // Profile Header
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: const BoxDecoration(
+                color: Color(0xFF1a1a2e),
               ),
-            ),
-            const SizedBox(height: 5),
-            // Email
-            Text(
-              _user.email,
-              style: const TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
-              ),
-            ),
-            const SizedBox(height: 30),
-            // User info cards
-            _buildInfoCard('Country', _user.country ?? 'Not set'),
-            _buildInfoCard('Language', _user.language ?? 'Not set'),
-            _buildInfoCard('Interests', _user.interests.join(', ')),
-            const SizedBox(height: 30),
-            // Settings section
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Settings',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+              child: Row(
+                children: [
+                  // Avatar
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: const Color(0xFFFF6B6B),
+                        width: 3,
+                      ),
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: Image.asset(
+                        'assets/resource/avatar_h/1.webp',
+                        width: 80,
+                        height: 80,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
-                ),
+                  const SizedBox(width: 20),
+                  
+                  // User Info
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        authService.username ?? 'User',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      Text(
+                        authService.country ?? 'Country',
+                        style: const TextStyle(
+                          color: Colors.white70,
+                          fontSize: 16,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      // Logout Button
+                      ElevatedButton(
+                        onPressed: () {
+                          authService.logout();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFFFF6B6B),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 8,
+                          ),
+                        ),
+                        child: const Text(
+                          'Logout',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 10),
-            _buildSettingsTile(
-              'Notifications',
-              Icons.notifications,
-              true,
-              (value) {
-                // Handle notification setting
-              },
-            ),
-            _buildSettingsTile(
-              'Auto Join Rooms',
-              Icons.auto_mode,
-              false,
-              (value) {
-                // Handle auto join setting
-              },
-            ),
-            _buildSettingsTile(
-              'Voice Activity Detection',
-              Icons.hearing,
-              true,
-              (value) {
-                // Handle VAD setting
-              },
-            ),
-            _buildSettingsTile(
-              'Noise Suppression',
-              Icons.noise_aware,
-              true,
-              (value) {
-                // Handle noise suppression setting
-              },
-            ),
-            const SizedBox(height: 30),
-            // Action buttons
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: ElevatedButton(
-                onPressed: () {
-                  // Handle edit profile
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  foregroundColor: Colors.white,
-                  minimumSize: const Size.fromHeight(50),
-                ),
-                child: const Text('Edit Profile'),
+            
+            // Profile Stats
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: const BoxDecoration(
+                color: Color(0xFF1a1a2e),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _buildStatItem('0', 'Friends'),
+                  _buildStatItem('0', 'Followers'),
+                  _buildStatItem('0', 'Following'),
+                ],
               ),
             ),
-            const SizedBox(height: 10),
+            
+            const SizedBox(height: 20),
+            
+            // Profile Menu
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: OutlinedButton(
-                onPressed: () {
-                  // Handle logout
-                },
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: Colors.red,
-                  minimumSize: const Size.fromHeight(50),
-                ),
-                child: const Text('Logout'),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Column(
+                children: [
+                  _buildMenuItem(
+                    'assets/resource/icon_h/account_h.png',
+                    'Account Settings',
+                    () {},
+                  ),
+                  _buildMenuItem(
+                    'assets/resource/icon_h/privacy_h.png',
+                    'Privacy Settings',
+                    () {},
+                  ),
+                  _buildMenuItem(
+                    'assets/resource/icon_h/notification_h.png',
+                    'Notifications',
+                    () {},
+                  ),
+                  _buildMenuItem(
+                    'assets/resource/icon_h/help_h.png',
+                    'Help & Support',
+                    () {},
+                  ),
+                ],
               ),
             ),
           ],
@@ -152,39 +167,55 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildInfoCard(String title, String value) {
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          children: [
-            Text(
-              '$title: ',
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Expanded(
-              child: Text(value),
-            ),
-          ],
+  Widget _buildStatItem(String value, String label) {
+    return Column(
+      children: [
+        Text(
+          value,
+          style: const TextStyle(
+            color: Color(0xFFFF6B6B),
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-      ),
+        Text(
+          label,
+          style: const TextStyle(
+            color: Colors.white70,
+            fontSize: 12,
+          ),
+        ),
+      ],
     );
   }
 
-  Widget _buildSettingsTile(
-    String title,
-    IconData icon,
-    bool value,
-    Function(bool) onChanged,
-  ) {
-    return SwitchListTile(
-      title: Text(title),
-      secondary: Icon(icon),
-      value: value,
-      onChanged: onChanged,
+  Widget _buildMenuItem(String iconPath, String title, VoidCallback onTap) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 10),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: ListTile(
+        leading: Image.asset(
+          iconPath,
+          width: 24,
+          height: 24,
+        ),
+        title: Text(
+          title,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+          ),
+        ),
+        trailing: Image.asset(
+          'assets/resource/icon_h/arrow_h.png',
+          width: 16,
+          height: 16,
+        ),
+        onTap: onTap,
+      ),
     );
   }
 }

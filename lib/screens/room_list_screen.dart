@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:global_voice_chat/models/chat_room.dart';
-import 'package:global_voice_chat/screens/create_room_screen.dart';
-import 'package:global_voice_chat/services/voice_chat_service.dart';
-import 'package:global_voice_chat/widgets/search_delegate.dart';
+import 'package:achat_global_replica/models/chat_room.dart';
 
 class RoomListScreen extends StatefulWidget {
   const RoomListScreen({super.key});
@@ -12,258 +9,102 @@ class RoomListScreen extends StatefulWidget {
 }
 
 class _RoomListScreenState extends State<RoomListScreen> {
-  final VoiceChatService _voiceChatService = VoiceChatService();
-  List<ChatRoom> _rooms = [];
-  bool _isLoading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadRooms();
-  }
-
-  Future<void> _loadRooms() async {
-    try {
-      final rooms = await _voiceChatService.getRooms();
-      setState(() {
-        _rooms = rooms;
-        _isLoading = false;
-      });
-    } catch (e) {
-      setState(() {
-        _isLoading = false;
-      });
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to load rooms: $e')),
-        );
-      }
-    }
-  }
+  // Sample rooms data to match Achat Global
+  final List<Map<String, dynamic>> _rooms = [
+    {
+      'id': '1',
+      'name': 'Global Chat',
+      'users': 1245,
+      'image': 'assets/resource/home_h/friend_match_bg.webp',
+      'isLocked': false,
+      'isLive': true,
+    },
+    {
+      'id': '2',
+      'name': 'Music Lovers',
+      'users': 856,
+      'image': 'assets/resource/live_h/bg_top_cover_film.png',
+      'isLocked': true,
+      'isLive': true,
+    },
+    {
+      'id': '3',
+      'name': 'Talent Show',
+      'users': 2103,
+      'image': 'assets/resource/live_h/bg_cover_talent.png',
+      'isLocked': false,
+      'isLive': true,
+    },
+    {
+      'id': '4',
+      'name': 'PK Battles',
+      'users': 3421,
+      'image': 'assets/resource/live_h/bg_cover_matchmaker.png',
+      'isLocked': false,
+      'isLive': true,
+    },
+    {
+      'id': '5',
+      'name': 'Language Exchange',
+      'users': 756,
+      'image': 'assets/resource/home_h/img_home_bg.webp',
+      'isLocked': false,
+      'isLive': false,
+    },
+    {
+      'id': '6',
+      'name': 'Gaming Zone',
+      'users': 1876,
+      'image': 'assets/resource/live_h/bg_top_jelly_boom.png',
+      'isLocked': true,
+      'isLive': true,
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Voice Chat Rooms'),
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {
-              showSearch(
-                context: context,
-                delegate: RoomSearchDelegate(_rooms),
-              );
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.filter_list),
-            onPressed: () {
-              // Implement filter functionality
-            },
-          ),
-        ],
-      ),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              itemCount: _rooms.length,
-              itemBuilder: (context, index) {
-                final room = _rooms[index];
-                return _buildRoomCard(room);
-              },
-            ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const CreateRoomScreen(),
-            ),
-          );
-        },
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
-        child: const Icon(Icons.add),
-      ),
-    );
-  }
-
-  Widget _buildRoomCard(ChatRoom room) {
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: ListTile(
-        title: Text(
-          room.name,
-          style: const TextStyle(
+        title: const Text(
+          'Voice Rooms',
+          style: TextStyle(
+            color: Colors.white,
             fontWeight: FontWeight.bold,
-            fontSize: 18,
           ),
         ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(room.description),
-            const SizedBox(height: 5),
-            Row(
-              children: [
-                Icon(
-                  Icons.language,
-                  size: 16,
-                  color: Colors.grey[600],
-                ),
-                const SizedBox(width: 5),
-                Text(
-                  room.language,
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 14,
-                  ),
-                ),
-                const SizedBox(width: 15),
-                Icon(
-                  Icons.group,
-                  size: 16,
-                  color: Colors.grey[600],
-                ),
-                const SizedBox(width: 5),
-                Text(
-                  '${room.participantCount} participants',
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 14,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        trailing: room.isPrivate
-            ? const Icon(
-                Icons.lock,
-                color: Colors.grey,
-              )
-            : const Icon(
-                Icons.lock_open,
-                color: Colors.green,
-              ),
-        onTap: () async {
-          final success = await _voiceChatService.joinRoom(room);
-          if (success && mounted) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => VoiceChatRoomScreen(room: room),
-              ),
-            );
-          }
-        },
-      ),
-    );
-  }
-}
-
-class VoiceChatRoomScreen extends StatefulWidget {
-  final ChatRoom room;
-  const VoiceChatRoomScreen({super.key, required this.room});
-
-  @override
-  State<VoiceChatRoomScreen> createState() => _VoiceChatRoomScreenState();
-}
-
-class _VoiceChatRoomScreenState extends State<VoiceChatRoomScreen> {
-  final VoiceChatService _voiceChatService = VoiceChatService();
-  bool _isConnected = false;
-  bool _isMuted = false;
-  bool _isSpeakerOn = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _voiceChatService.connectionStream.listen((connected) {
-      setState(() {
-        _isConnected = connected;
-      });
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.room.name),
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
-        actions: [
-          IconButton(
-            icon: Icon(_isMuted ? Icons.mic_off : Icons.mic),
-            onPressed: () {
-              setState(() {
-                _isMuted = !_isMuted;
-              });
-            },
-          ),
-          IconButton(
-            icon: Icon(_isSpeakerOn ? Icons.volume_up : Icons.volume_off),
-            onPressed: () {
-              setState(() {
-                _isSpeakerOn = !_isSpeakerOn;
-              });
-            },
-          ),
-        ],
+        backgroundColor: const Color(0xFF1a1a2e),
+        elevation: 0,
       ),
       body: Column(
         children: [
-          // Connection status indicator
-          Container(
-            padding: const EdgeInsets.all(16),
-            color: _isConnected ? Colors.green[100] : Colors.red[100],
-            child: Row(
-              children: [
-                Icon(
-                  _isConnected ? Icons.check_circle : Icons.error,
-                  color: _isConnected ? Colors.green : Colors.red,
+          // Search Bar
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: const TextField(
+                decoration: InputDecoration(
+                  hintText: 'Search rooms...',
+                  hintStyle: TextStyle(color: Colors.white70),
+                  prefixIcon: Icon(Icons.search, color: Colors.white70),
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.symmetric(horizontal: 15),
                 ),
-                const SizedBox(width: 10),
-                Text(
-                  _isConnected ? 'Connected' : 'Connecting...',
-                  style: TextStyle(
-                    color: _isConnected ? Colors.green : Colors.red,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ),
-          // Participant list
+          
+          // Room List
           Expanded(
             child: ListView.builder(
-              itemCount: widget.room.participants.length,
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              itemCount: _rooms.length,
               itemBuilder: (context, index) {
-                final participant = widget.room.participants[index];
-                return ListTile(
-                  leading: const CircleAvatar(
-                    child: Icon(Icons.person),
-                  ),
-                  title: Text(participant),
-                  trailing: index == 0
-                      ? Container(
-                          padding: const EdgeInsets.all(5),
-                          decoration: const BoxDecoration(
-                            color: Colors.blue,
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(
-                            Icons.mic,
-                            size: 15,
-                            color: Colors.white,
-                          ),
-                        )
-                      : null,
-                );
+                return _buildRoomItem(_rooms[index]);
               },
             ),
           ),
@@ -271,16 +112,120 @@ class _VoiceChatRoomScreenState extends State<VoiceChatRoomScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          if (_isConnected) {
-            _voiceChatService.leaveRoom();
-            Navigator.pop(context);
-          }
+          // Create room functionality
         },
-        backgroundColor: Colors.red,
-        foregroundColor: Colors.white,
-        child: const Icon(Icons.call_end),
+        backgroundColor: const Color(0xFFFF6B6B),
+        child: Image.asset(
+          'assets/resource/home_h/icon_add.png',
+          width: 24,
+          height: 24,
+        ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+    );
+  }
+
+  Widget _buildRoomItem(Map<String, dynamic> room) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 15),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: ListTile(
+        contentPadding: const EdgeInsets.all(10),
+        leading: Stack(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.asset(
+                room['image'],
+                width: 60,
+                height: 60,
+                fit: BoxFit.cover,
+              ),
+            ),
+            if (room['isLive'])
+              Positioned(
+                top: 0,
+                left: 0,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                  decoration: const BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10),
+                    ),
+                  ),
+                  child: const Text(
+                    'LIVE',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 8,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            if (room['isLocked'])
+              Positioned(
+                bottom: 0,
+                right: 0,
+                child: Container(
+                  padding: const EdgeInsets.all(3),
+                  decoration: const BoxDecoration(
+                    color: Colors.black54,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                    ),
+                  ),
+                  child: Image.asset(
+                    'assets/resource/chat_h/lock_h.png',
+                    width: 15,
+                    height: 15,
+                  ),
+                ),
+              ),
+          ],
+        ),
+        title: Text(
+          room['name'],
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        subtitle: Row(
+          children: [
+            const Icon(
+              Icons.person,
+              size: 16,
+              color: Colors.white70,
+            ),
+            const SizedBox(width: 5),
+            Text(
+              '${room['users']} users',
+              style: const TextStyle(
+                color: Colors.white70,
+                fontSize: 12,
+              ),
+            ),
+          ],
+        ),
+        trailing: IconButton(
+          onPressed: () {
+            // Room options
+          },
+          icon: Image.asset(
+            'assets/resource/live_h/bar_more.png',
+            width: 24,
+            height: 24,
+          ),
+        ),
+        onTap: () {
+          // Join room functionality
+        },
+      ),
     );
   }
 }
