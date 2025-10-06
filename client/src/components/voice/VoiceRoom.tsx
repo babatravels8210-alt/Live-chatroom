@@ -34,13 +34,6 @@ const VoiceRoom: React.FC<VoiceRoomProps> = ({ roomId }) => {
   const socket = useRef<any>(null);
   const localAudioTrack = useRef<any>(null);
 
-  useEffect(() => {
-    initializeVoiceRoom();
-    return () => {
-      cleanup();
-    };
-  }, [roomId, initializeVoiceRoom]);
-
   const initializeVoiceRoom = async () => {
     try {
       // Initialize Agora client
@@ -62,6 +55,13 @@ const VoiceRoom: React.FC<VoiceRoomProps> = ({ roomId }) => {
       console.error('Error initializing voice room:', error);
     }
   };
+
+  useEffect(() => {
+    initializeVoiceRoom();
+    return () => {
+      cleanup();
+    };
+  }, [roomId]);
 
   const joinChannel = async () => {
     if (!client.current) return;
