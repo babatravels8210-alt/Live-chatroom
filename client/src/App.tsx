@@ -30,4 +30,4 @@ function App() {
   );
 }
 
-export default App;
+export default App;// Force redeploy - Mon Oct  6 05:21:17 UTC 2025
