@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { useParams } from 'react-router-dom';
 import AgoraRTC from 'agora-rtc-sdk-ng';
 import { io } from 'socket.io-client';
@@ -20,6 +21,7 @@ interface User {
 const VoiceRoom: React.FC<VoiceRoomProps> = ({ roomId }) => {
   const [users, setUsers] = useState<User[]>([]);
   const [isMuted, setIsMuted] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isConnected, setIsConnected] = useState(false);
   const [roomInfo, setRoomInfo] = useState({
     name: 'Party Room',
@@ -37,7 +39,7 @@ const VoiceRoom: React.FC<VoiceRoomProps> = ({ roomId }) => {
     return () => {
       cleanup();
     };
-  }, [roomId]);
+  }, [roomId, initializeVoiceRoom]);
 
   const initializeVoiceRoom = async () => {
     try {

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import VoiceRoom from './VoiceRoom';
-import RoomList from './RoomList';
 import CreateRoomModal from './CreateRoomModal';
 import './VoiceDashboard.css';
 
@@ -19,6 +18,7 @@ const VoiceDashboard: React.FC = () => {
   const [currentRoom, setCurrentRoom] = useState<string | null>(null);
   const [rooms, setRooms] = useState<Room[]>([]);
   const [showCreateModal, setShowCreateModal] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [user, setUser] = useState({
     name: 'User',
     avatar: '/avatars/default.png',
@@ -96,6 +96,7 @@ const VoiceDashboard: React.FC = () => {
     joinRoom(newRoom.id);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const leaveRoom = () => {
     setCurrentRoom(null);
     navigate('/voice-dashboard');
