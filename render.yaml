@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: date-chat-pro
+    name: live-chatroom
     env: node
     buildCommand: npm install && npm run build:client
     startCommand: npm start
@@ -11,14 +11,14 @@ services:
         value: 10000
       - key: MONGODB_URI
         fromDatabase:
-          name: datechatpro-db
+          name: chatroom-db
           property: connectionString
       - key: JWT_SECRET
         generateValue: true
       - key: REDIS_URL
         fromService:
           type: redis
-          name: datechatpro-redis
+          name: chatroom-redis
           property: connectionString
       - key: CLOUDINARY_CLOUD_NAME
         sync: false
@@ -32,12 +32,12 @@ services:
         sync: false
 
 databases:
-  - name: datechatpro-db
-    databaseName: datechatpro
-    user: datechatpro
+  - name: chatroom-db
+    databaseName: chatroom
+    user: chatroom
     plan: starter
 
 redis:
-  - name: datechatpro-redis
+  - name: chatroom-redis
     plan: starter
     maxmemoryPolicy: allkeys-lru
