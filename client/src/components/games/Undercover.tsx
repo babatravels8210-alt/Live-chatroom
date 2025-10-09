@@ -32,12 +32,6 @@ const Undercover: React.FC<UndercoverProps> = ({ roomId, userId, onExit }) => {
     { civilian: 'Summer', undercover: 'Winter' }
   ];
 
-  useEffect(() => {
-    if (gameStarted && players.length === 0) {
-      initializeGame();
-    }
-  }, [gameStarted]);
-
   const initializeGame = () => {
     const wordPair = wordPairs[Math.floor(Math.random() * wordPairs.length)];
     const totalPlayers = 6;
@@ -78,6 +72,12 @@ const Undercover: React.FC<UndercoverProps> = ({ roomId, userId, onExit }) => {
     setPlayers(newPlayers);
     setMyWord(newPlayers[0].word);
   };
+
+  useEffect(() => {
+    if (gameStarted && players.length === 0) {
+      initializeGame();
+    }
+  }, [gameStarted, players.length, initializeGame]);
 
   const votePlayer = (playerId: string) => {
     setSelectedPlayer(playerId);
@@ -126,14 +126,14 @@ const Undercover: React.FC<UndercoverProps> = ({ roomId, userId, onExit }) => {
     if (aliveUndercover === 0) {
       alert('Civilians Win! 🎉');
     } else if (aliveUndercover >= aliveCivilians) {
-      alert('Undercover Wins! 🕵️');
+      alert('Undercover Wins! 🕵️‍♀️');
     }
   };
 
   return (
     <div className="undercover-game">
       <div className="game-header">
-        <h2>🕵️ Undercover</h2>
+        <h2>🕵️‍♀️ Undercover</h2>
         <div className="game-info">
           <span>Round: {currentRound}</span>
           <span>Phase: {gamePhase}</span>

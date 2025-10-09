@@ -68,7 +68,7 @@ const AdminDashboard: React.FC = () => {
     if (activeTab === 'users') {
       fetchUsers();
     }
-  }, [activeTab, searchTerm, filterStatus]);
+  }, [activeTab, searchTerm, filterStatus, fetchUsers]);
 
   const handleBanUser = async (userId: string, ban: boolean) => {
     try {

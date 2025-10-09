@@ -4,6 +4,7 @@ import { datingApi } from '../../services/api';
 
 const DatingProfile: React.FC = () => {
   const { user } = useAuth();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [profile, setProfile] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 

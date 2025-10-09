@@ -20,13 +20,23 @@ const DrawAndGuess: React.FC<DrawAndGuessProps> = ({ roomId, userId, onExit }) =
   const [isDrawer, setIsDrawer] = useState(true);
 
   const words = ['Cat', 'House', 'Tree', 'Car', 'Sun', 'Moon', 'Star', 'Flower', 'Bird', 'Fish'];
+  
+  const clearCanvas = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  };
 
   useEffect(() => {
     if (isDrawer) {
       const randomWord = words[Math.floor(Math.random() * words.length)];
       setCurrentWord(randomWord);
     }
-  }, [isDrawer]);
+  }, [isDrawer, words]);
 
   useEffect(() => {
     if (timeLeft > 0) {
@@ -38,7 +48,7 @@ const DrawAndGuess: React.FC<DrawAndGuessProps> = ({ roomId, userId, onExit }) =
       setTimeLeft(60);
       clearCanvas();
     }
-  }, [timeLeft]);
+  }, [timeLeft, isDrawer, clearCanvas]);
 
   const startDrawing = (e: React.MouseEvent<HTMLCanvasElement>) => {
     if (!isDrawer) return;
@@ -71,16 +81,6 @@ const DrawAndGuess: React.FC<DrawAndGuessProps> = ({ roomId, userId, onExit }) =
     ctx.stroke();
     ctx.beginPath();
     ctx.moveTo(x, y);
-  };
-
-  const clearCanvas = () => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
   };
 
   const submitGuess = () => {

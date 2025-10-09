@@ -34,6 +34,18 @@ const VoiceRoom: React.FC<VoiceRoomProps> = ({ roomId }) => {
   const socket = useRef<any>(null);
   const localAudioTrack = useRef<any>(null);
 
+  const cleanup = async () => {
+    if (client.current) {
+      await client.current.leave();
+    }
+    if (localAudioTrack.current) {
+      localAudioTrack.current.close();
+    }
+    if (socket.current) {
+      socket.current.disconnect();
+    }
+  };
+
   const initializeVoiceRoom = async () => {
     try {
       // Initialize Agora client
@@ -61,7 +73,7 @@ const VoiceRoom: React.FC<VoiceRoomProps> = ({ roomId }) => {
     return () => {
       cleanup();
     };
-  }, [roomId]);
+  }, [roomId, initializeVoiceRoom, cleanup]);
 
   const joinChannel = async () => {
     if (!client.current) return;
@@ -144,18 +156,6 @@ const VoiceRoom: React.FC<VoiceRoomProps> = ({ roomId }) => {
   const leaveRoom = () => {
     cleanup();
     // Navigate away from room
-  };
-
-  const cleanup = async () => {
-    if (client.current) {
-      await client.current.leave();
-    }
-    if (localAudioTrack.current) {
-      localAudioTrack.current.close();
-    }
-    if (socket.current) {
-      socket.current.disconnect();
-    }
   };
 
   return (
