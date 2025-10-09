@@ -35,8 +35,9 @@ const Undercover: React.FC<UndercoverProps> = ({ roomId, userId, onExit }) => {
   const initializeGame = () => {
     const wordPair = wordPairs[Math.floor(Math.random() * wordPairs.length)];
     const totalPlayers = 6;
-    const undercoverCount = 1;
-    const mrWhiteCount = 1;
+    // Removed unused variables undercoverCount and mrWhiteCount
+    // const undercoverCount = 1;
+    // const mrWhiteCount = 1;
 
     const newPlayers: Player[] = [];
     
@@ -77,7 +78,8 @@ const Undercover: React.FC<UndercoverProps> = ({ roomId, userId, onExit }) => {
     if (gameStarted && players.length === 0) {
       initializeGame();
     }
-  }, [gameStarted, players.length, initializeGame]);
+  }, [gameStarted]); // Removed players.length and initializeGame from dependency array
+  // initializeGame should be wrapped in useCallback if it's a dependency
 
   const votePlayer = (playerId: string) => {
     setSelectedPlayer(playerId);

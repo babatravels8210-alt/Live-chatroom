@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import AgoraRTC from 'agora-rtc-sdk-ng';
 import { io } from 'socket.io-client';
@@ -21,20 +20,20 @@ interface User {
 const VoiceRoom: React.FC<VoiceRoomProps> = ({ roomId }) => {
   const [users, setUsers] = useState<User[]>([]);
   const [isMuted, setIsMuted] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isConnected, setIsConnected] = useState(false);
-  const [roomInfo, setRoomInfo] = useState({
+  const [roomInfo] = useState({
     name: 'Party Room',
     theme: 'Cozy',
     participantCount: 0,
     host: 'Room Host'
   });
+  // Removed unused setRoomInfo variable
   
   const client = useRef<any>(null);
   const socket = useRef<any>(null);
   const localAudioTrack = useRef<any>(null);
 
-  const cleanup = async () => {
+  const cleanup = useCallback(async () => {
     if (client.current) {
       await client.current.leave();
     }
@@ -44,9 +43,9 @@ const VoiceRoom: React.FC<VoiceRoomProps> = ({ roomId }) => {
     if (socket.current) {
       socket.current.disconnect();
     }
-  };
+  }, []);
 
-  const initializeVoiceRoom = async () => {
+  const initializeVoiceRoom = useCallback(async () => {
     try {
       // Initialize Agora client
       client.current = AgoraRTC.createClient({ mode: 'live', codec: 'vp8' });
@@ -66,16 +65,16 @@ const VoiceRoom: React.FC<VoiceRoomProps> = ({ roomId }) => {
     } catch (error) {
       console.error('Error initializing voice room:', error);
     }
-  };
+  }, [handleUserPublished, handleUserUnpublished, joinChannel, setupSocketListeners, setIsConnected]);
 
   useEffect(() => {
     initializeVoiceRoom();
     return () => {
       cleanup();
     };
-  }, [roomId, initializeVoiceRoom, cleanup]);
+  }, [initializeVoiceRoom, cleanup]);
 
-  const joinChannel = async () => {
+  const joinChannel = useCallback(async () => {
     if (!client.current) return;
     
     const appId = process.env.REACT_APP_AGORA_APP_ID || '';
@@ -102,9 +101,9 @@ const VoiceRoom: React.FC<VoiceRoomProps> = ({ roomId }) => {
     } catch (error) {
       console.error('Error joining channel:', error);
     }
-  };
+  }, [roomId, setUsers]);
 
-  const handleUserPublished = async (user: any, mediaType: string) => {
+  const handleUserPublished = useCallback(async (user: any, mediaType: string) => {
     if (mediaType === 'audio') {
       await client.current?.subscribe(user, mediaType);
       const remoteUser: User = {
@@ -118,13 +117,13 @@ const VoiceRoom: React.FC<VoiceRoomProps> = ({ roomId }) => {
       
       setUsers(prev => [...prev, remoteUser]);
     }
-  };
+  }, [setUsers]);
 
-  const handleUserUnpublished = (user: any) => {
+  const handleUserUnpublished = useCallback((user: any) => {
     setUsers(prev => prev.filter(u => u.id !== user.uid));
-  };
+  }, [setUsers]);
 
-  const setupSocketListeners = () => {
+  const setupSocketListeners = useCallback(() => {
     if (!socket.current) return;
     
     socket.current.on('user-joined', (user: User) => {
@@ -140,7 +139,7 @@ const VoiceRoom: React.FC<VoiceRoomProps> = ({ roomId }) => {
         u.id === userId ? { ...u, isSpeaking } : u
       ));
     });
-  };
+  }, [setUsers]);
 
   const toggleMute = async () => {
     if (localAudioTrack.current) {

@@ -36,19 +36,19 @@ const DrawAndGuess: React.FC<DrawAndGuessProps> = ({ roomId, userId, onExit }) =
       const randomWord = words[Math.floor(Math.random() * words.length)];
       setCurrentWord(randomWord);
     }
-  }, [isDrawer, words]);
+  }, [isDrawer]); // Removed words from dependency array since it's a constant
 
   useEffect(() => {
     if (timeLeft > 0) {
-      const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+      const timer = setTimeout(() => setTimeLeft(t => t - 1), 1000);
       return () => clearTimeout(timer);
     } else {
       // Time's up - switch roles
-      setIsDrawer(!isDrawer);
+      setIsDrawer(i => !i); // Using functional update to avoid dependency on isDrawer
       setTimeLeft(60);
       clearCanvas();
     }
-  }, [timeLeft, isDrawer, clearCanvas]);
+  }, [timeLeft]); // Removed isDrawer and clearCanvas from dependency array
 
   const startDrawing = (e: React.MouseEvent<HTMLCanvasElement>) => {
     if (!isDrawer) return;
@@ -91,7 +91,7 @@ const DrawAndGuess: React.FC<DrawAndGuessProps> = ({ roomId, userId, onExit }) =
     if (guess.toLowerCase() === currentWord.toLowerCase()) {
       setScore(score + 10);
       alert('Correct! 🎉');
-      setIsDrawer(!isDrawer);
+      setIsDrawer(i => !i); // Using functional update to avoid dependency on isDrawer
       setTimeLeft(60);
       clearCanvas();
     }

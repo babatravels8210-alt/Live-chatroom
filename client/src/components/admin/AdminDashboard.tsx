@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import './AdminDashboard.css';
 
@@ -37,7 +37,7 @@ const AdminDashboard: React.FC = () => {
     fetchDashboardData();
   }, []);
 
-  const fetchDashboardData = async () => {
+  const fetchDashboardData = useCallback(async () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.get('/api/admin/dashboard', {
@@ -49,9 +49,9 @@ const AdminDashboard: React.FC = () => {
       console.error('Error fetching dashboard data:', error);
       setLoading(false);
     }
-  };
+  }, [setStats, setLoading]);
 
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.get('/api/admin/users', {
@@ -62,7 +62,7 @@ const AdminDashboard: React.FC = () => {
     } catch (error) {
       console.error('Error fetching users:', error);
     }
-  };
+  }, [searchTerm, filterStatus, setUsers]);
 
   useEffect(() => {
     if (activeTab === 'users') {
