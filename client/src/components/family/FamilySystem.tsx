@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './FamilySystem.css';
 
 interface Family {
@@ -32,7 +32,7 @@ const FamilySystem: React.FC = () => {
     loadFamilies();
   }, []);
 
-  const loadFamilies = () => {
+  const loadFamilies = useCallback(() => {
     // Mock data
     const mockFamilies: Family[] = [
       {
@@ -81,7 +81,7 @@ const FamilySystem: React.FC = () => {
       }
     ];
     setFamilies(mockFamilies);
-  };
+  }, [setFamilies]);
 
   const joinFamily = (familyId: string) => {
     const family = families.find(f => f.id === familyId);

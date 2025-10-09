@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { datingApi } from '../../services/api';
 
 const DatingProfile: React.FC = () => {
   const { user } = useAuth();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [profile, setProfile] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
@@ -12,7 +11,7 @@ const DatingProfile: React.FC = () => {
     fetchProfile();
   }, []);
 
-  const fetchProfile = async () => {
+  const fetchProfile = useCallback(async () => {
     try {
       const response = await datingApi.getProfile();
       setProfile(response.data.profile);
@@ -21,7 +20,7 @@ const DatingProfile: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [setProfile, setLoading]);
 
   if (loading) {
     return <div>Loading profile...</div>;
